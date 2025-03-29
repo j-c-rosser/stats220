@@ -1,0 +1,79 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+
+```
+
+## Exploration of various characteristics relating to messages received
+Messages received did not include messages received from group chats.
+The following data was collected:
+date_completed: The time and date the survey was completed
+time_received: categorical variable of time the message was received
+regular_contact: whether the sender is a person communicated with on atleast a weekly basis
+app_type: whether the message was received on a message based app (eg texts, facebook                 messenger) or social media app (eg instagram)
+sender: The category of relationship the sender belongs to
+words: The number of words in the message
+response_time: The time taken to respond to the message received
+
+Messages received did not include messages received from group chats.
+```{r}
+#load the tidyverse library
+library("tidyverse")
+
+#load the data
+logged_data<-read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTq9IBgTD97IziXyiaWnhi9tHKLqHl5FNqTiozj3oXUzqSzF_VYP2M5YHRTBduTMn-BxdyXXE0vZF3E/pub?gid=1652039699&single=true&output=csv")
+
+#rename the variables
+latest_data<-logged_data %>%
+  rename(date_completed=1, time_received=2, regular_contact=3,
+         app_type=4, sender=5, words=6, response_time=7)
+```
+
+
+```{r}
+#look at the number of responses to the survey
+paste("There was a total of", length(latest_data$sender), "messages received recorded using the survey, totaling", sum(latest_data$words), "words!")
+
+#explore the mean, min and max number of words in a message
+paste("The shortest message received was", min(latest_data$words), "words long,")
+paste("The longest message received was", max(latest_data$words), "words long,")
+paste("The mean length of message received was", round(mean(latest_data$words),0), "words long.")
+```
+
+![](https://media.tenor.com/2IU9kk3bOt0AAAAM/thats-a-lot-of-text-lots-of-reading.gif)
+
+```{r}
+#plot the sender group, coloured by time to respond to the message
+ggplot(data=latest_data)+
+  geom_bar(aes(y=sender, fill=response_time))+
+  labs(title="Friends left hanging longer?",
+    subtitle="Comparing response times to messages received across sender categories",
+       x="Number of Messages received",
+       y="Sender Category")
+
+#plot the number of words of the message, coloured by the sender category
+ggplot(data=latest_data)+
+  geom_bar(aes(x=words, fill=sender))+
+  labs(title="Closer relationships use fewer words to message?",
+       subtitle="Comparing number of words in a message across sender categories",
+       x="Number of words in message",
+       y="Number of messages received")
+
+#plot the time the message is received coloured by time to respond to message
+ggplot(data=latest_data)+
+  geom_bar(aes(y=time_received, fill=response_time))+
+  labs(title="Quicker responses during daytime hours?",
+       subtitle="Comparing the response time to messages received at various times",
+       x="Time the message is received",
+       y="Number of messages received")
+```
+
+![](https://media1.tenor.com/m/wJDBsUZ4O9IAAAAC/group-text-buzz.gif)
