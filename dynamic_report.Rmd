@@ -39,6 +39,15 @@ paste("The mean length of message received was", round(mean(latest_data$words),0
 ![](https://media.tenor.com/2IU9kk3bOt0AAAAM/thats-a-lot-of-text-lots-of-reading.gif)
 
 ```{r}
+
+#plot the number of words of the message, coloured by whether the sender is a regular contact
+ggplot(data=latest_data)+
+  geom_bar(aes(x=words, fill=regular_contact))+
+  labs(title="Shorter messages from more regular contacts?",
+       subtitle="Comparing number of words in a message between regular and irregular contacts",
+       x="Number of words in message",
+       y="Number of messages received")
+
 #plot the sender group, coloured by time to respond to the message
 ggplot(data=latest_data)+
   geom_bar(aes(y=sender, fill=response_time))+
