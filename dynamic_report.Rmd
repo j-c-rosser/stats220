@@ -15,13 +15,13 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
 ## Exploration of various characteristics relating to messages received
 Messages received did not include messages received from group chats.
 The following data was collected:
-date_completed: The time and date the survey was completed
-time_received: categorical variable of time the message was received
-regular_contact: whether the sender is a person communicated with on atleast a weekly basis
-app_type: whether the message was received on a message based app (eg texts, facebook                 messenger) or social media app (eg instagram)
-sender: The category of relationship the sender belongs to
-words: The number of words in the message
-response_time: The time taken to respond to the message received
+date_completed - The time and date the survey was completed,
+time_received - categorical variable of time the message was received,
+regular_contact -  whether the sender is a person communicated with on atleast a weekly basis
+app_type - whether the message was received on a message based app (eg texts, facebook messenger) or social media app (eg instagram),
+sender - The category of relationship the sender belongs to,
+words - The number of words in the message, and
+response_time - The time taken to respond to the message received.
 
 Messages received did not include messages received from group chats.
 ```{r}
@@ -59,6 +59,7 @@ ggplot(data=latest_data)+
        x="Number of Messages received",
        y="Sender Category")
 
+
 #plot the number of words of the message, coloured by the sender category
 ggplot(data=latest_data)+
   geom_bar(aes(x=words, fill=sender))+
@@ -66,6 +67,7 @@ ggplot(data=latest_data)+
        subtitle="Comparing number of words in a message across sender categories",
        x="Number of words in message",
        y="Number of messages received")
+
 
 #plot the time the message is received coloured by time to respond to message
 ggplot(data=latest_data)+
